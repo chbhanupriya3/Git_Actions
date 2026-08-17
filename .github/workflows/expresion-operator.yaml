@@ -1,6 +1,14 @@
 name: 09-01-Expressions and Operators
 on:
-    workflow_dispatch
+    workflow_dispatch:
+        inputs:
+            environment:
+                type: choice
+                options:
+                - development
+                - staging
+                - production
+                default: development
 jobs:
     operators-demo:
         runs-on: ubuntu-latest    
@@ -21,3 +29,14 @@ jobs:
                 echo "Push and Main : ${{ github.event_name == 'push' && github.ref_name == 'main' }}"  
                 echo "Push or workflow dispatch : ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}"            
                 echo "Not push : ${{ !(github.event_name == 'push') }}"
+            - name: Using if and comparision operators
+              if: inputs.environment == 'production'  
+              run: echo " Production step is running"
+
+            - name: using not equal and if  operator    
+              if: inputs.environment != 'production'  
+              run: echo "Non Production step is running"
+
+            - name: using greater than and if operator    
+              if: github.run_number > 1  
+              run: echo "This is not the first run of this workflow ${{ github.run_number}}"  

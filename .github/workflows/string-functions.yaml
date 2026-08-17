@@ -14,8 +14,23 @@ jobs:
             echo " repo contains Action: ${{ contains( github.repository, 'Action') }}"
             echo "actor contains: ${{ contains( github.actor, 'bhanu') }}"
         - name: startsWith()
-          if: startsWith( github.event.repository.name, 'G')
+          if: startsWith( github.repository, 'G')
           run: |
             echo "=========================================="  
-            echo " starts with Git "            
+            echo " starts with Git " 
+        - name: startwi
+          run:  |
+            echo " ref_name starts with : ${{ startsWith(github.ref_name, 'mast') }}"          
+        - name: contains()
+          if: contains(github.event_name, 'workflow')           
+          run: echo " It is workflow dispatch event "
+        - name: contains
+          run:  |
+            echo " actor contains: ${{ contains(github.actor, 'priya') }}" 
+        - name: endwith
+          run: |
+            echo "repo ends with: ${{ endsWith(github.repository, 'Actions')}}"  
+        - name: end
+          if: endsWith( github.actor, '3')
+          run: echo "Bhanu is a good girl"     
      

@@ -14,7 +14,7 @@ jobs:
             echo " repo contains Action: ${{ contains( github.repository, 'Action') }}"
             echo "actor contains: ${{ contains( github.actor, 'bhanu') }}"
         - name: startsWith()
-          if: startsWith( github.action_repository, 'G')
+          if: startsWith( github.event.repository.name, 'G')
           run: |
             echo "=========================================="  
             echo " starts with Git "            

@@ -7,7 +7,7 @@ jobs:
         steps:
         - name: format()    
           run: |
-           echo "${{ format(Workflow triggered by {0} and branch is {1} also run number is {2}, github.ctor, github.ref_name, github.run_number) }}"
+           echo "${{ format('Workflow triggered by {0} and branch is {1} also run number is {2}', github.actor, github.ref_name, github.run_number) }}"
         - name: startsWith()
           if: startsWith( github.repository, 'G')
           run: |

@@ -5,14 +5,9 @@ jobs:
     string-functions:
         runs-on: ubuntu-latest    
         steps:
-        - name: contains()    
+        - name: format()    
           run: |
-            echo "=========================================="  
-            echo " contains() "
-            echo "=========================================="
-            echo "ref contains main: ${{ contains(github.ref, 'main') }}"
-            echo " repo contains Action: ${{ contains( github.repository, 'Action') }}"
-            echo "actor contains: ${{ contains( github.actor, 'bhanu') }}"
+           echo "${{ format(Workflow triggered by {0} and branch is {1} also run number is {2}, github.ctor, github.ref_name, github.run_number) }}"
         - name: startsWith()
           if: startsWith( github.repository, 'G')
           run: |

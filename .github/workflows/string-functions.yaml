@@ -14,7 +14,7 @@ jobs:
             echo " repo contains Action: ${{ contains( github.repository, 'Action') }}"
             echo "actor contains: ${{ contains( github.actor, 'bhanu') }}"
         - name: startsWith()
-          if: contains( github.ref_name, 'master')
+          if: contains( github.ref_name, 'main')
           run: 
             echo "=========================================="  
             echo " Yes "            

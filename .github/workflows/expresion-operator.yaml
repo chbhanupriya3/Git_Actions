@@ -13,3 +13,11 @@ jobs:
                 echo "ref_name == master : ${{github.ref_name == 'master'}}"
                 echo "ref_name != main : ${{github.ref_name != 'main'}}"
                 echo "run_number > 0    : ${{github.run_number > 0}}"
+            - name: Logical operator
+              run: |
+                echo  "****************************************"
+                echo  "Logical Operator"
+                echo "*****************************************"  
+                echo "Push and Main : ${{ github.event_name == 'push' && github.ref_name == 'main' }}"  
+                echo "Push or workflow dispatch : ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}"            
+                echo "Not push : ${{ !(github.event_name == 'push') }}"

@@ -1,0 +1,45 @@
+name: Status Check Summary
+on:
+  workflow_dispatch:
+jobs:
+  summary-statuscheck:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Step -1 Runs Normally
+          run: echo "Step 1 completed successfully"
+        - name: Step - 2 Fails Intentionally
+          run: |
+            echo "Failing this step intentionally"
+            exit 1
+        - name: Step - 3 Success()
+          if: success()
+          run:  
+            echo "This will run only if all the previous steps are passed"
+        - name: Step - 4 Failure()
+          if: failure()
+          run: echo "Run this step only if there is any failure of previous steps."    
+        - name: always()
+          if: always()
+          run: echo "This step will run always"
+  notify-onfailure:
+        runs-on: ubuntu-latest
+        needs:  summary-statuscheck
+        if: failure()
+        steps:
+        - name: send Alert
+          run: |
+            echo "Job Failed - Sending Notification"         
+            echo "Branch is :   ${{ github.ref_name}}"
+            echo "Actor is  :   ${{ github.actor}}"
+  final-summary:
+        runs-on: ubuntu-latest
+        needs: [ summary-statuscheck, notify-onfailure ]          
+        if: always()
+        steps:
+        - name: write summary
+          run: |
+            echo " PIPELINE SUMMARY"      >> $GITHUB_STEP_SUMMARY
+            echo "| JOB                 |  RESULT      |" >> $GITHUB_STEP_SUMMARY
+            echo "| -----               |  ------      |" >> $GITHUB_STEP_SUMMARY
+            echo "| summary-statuscheck | ${{ needs.Summary-Statuscheck.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "| notify-onfailure    | ${{ needs.notify-onfailure.result}}" >> $GITHUB_STEP_SUMMARY
